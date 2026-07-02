@@ -1,0 +1,15 @@
+{% extends "USER/base_user.html" %}
+{% block content %}
+<div class="glass-card">
+    <h2 style="margin-top: 0;">Notifications</h2>
+    {% for n in val %}
+    <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+        <h3 style="margin: 0 0 0.5rem 0; color: #3b82f6;">{{ n.title }}</h3>
+        <p style="margin: 0 0 0.5rem 0;">{{ n.message }}</p>
+        <small style="color: #94a3b8;">{{ n.created_at|date:"Y-m-d H:i" }}</small>
+    </div>
+    {% empty %}
+    <p>No notifications.</p>
+    {% endfor %}
+</div>
+{% endblock %}

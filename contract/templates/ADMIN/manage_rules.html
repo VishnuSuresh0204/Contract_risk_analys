@@ -1,0 +1,44 @@
+{% extends "ADMIN/base_admin.html" %}
+{% block content %}
+<div class="glass-card">
+    <h2 style="margin-top: 0;">Add Rule</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Clause Type</label>
+        <input type="text" name="clause_type" required>
+        <label>Keywords (comma separated)</label>
+        <input type="text" name="keyword" required>
+        <label>Risk Level if Missing</label>
+        <select name="risk_level_if_missing">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+        <label>Description</label>
+        <textarea name="description"></textarea>
+        <button type="submit" class="btn">Add Rule</button>
+    </form>
+</div>
+
+<div class="glass-card">
+    <h2 style="margin-top: 0;">Existing Rules</h2>
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Keywords</th>
+            <th>Active</th>
+            <th>Action</th>
+        </tr>
+        {% for r in val %}
+        <tr>
+            <td>{{ r.clause_type }}</td>
+            <td>{{ r.keyword }}</td>
+            <td>{{ r.is_active }}</td>
+            <td>
+                <a href="/admin_toggle_rule?id={{ r.id }}" class="btn" style="padding: 0.25rem 0.75rem; font-size: 0.8rem; background: {% if r.is_active %}#eab308{% else %}#22c55e{% endif %};">Toggle</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

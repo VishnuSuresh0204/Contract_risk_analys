@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --primary: #ef4444;
+            --secondary: #1e293b;
+            --accent: #f97316;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        body { margin: 0; font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); display: flex; min-height: 100vh; }
+        .sidebar { width: 250px; background: var(--glass-bg); backdrop-filter: blur(10px); border-right: 1px solid var(--glass-border); padding: 2rem 1rem; display: flex; flex-direction: column; }
+        .sidebar .logo { font-size: 1.5rem; font-weight: 800; color: white; text-decoration: none; background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 2rem; text-align: center;}
+        .sidebar a { color: #cbd5e1; text-decoration: none; padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 0.5rem; transition: all 0.3s; font-weight: 600; }
+        .sidebar a:hover { background: rgba(255,255,255,0.1); color: white; }
+        .main-content { flex: 1; padding: 2rem; overflow-y: auto; box-sizing: border-box; }
+        .glass-card { background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); }
+        .btn { background: linear-gradient(90deg, var(--primary), var(--accent)); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: transform 0.2s ease; text-decoration: none; display: inline-block;}
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--glass-border); }
+        th { background: rgba(255,255,255,0.02); color: #94a3b8; font-weight: 600; }
+        input, select, textarea { width: 100%; padding: 0.75rem; margin-bottom: 1rem; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255, 255, 255, 0.05); color: white; font-family: 'Inter', sans-serif; box-sizing: border-box; }
+        .badge { padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; }
+        .badge-high { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #ef4444; }
+        .badge-medium { background: rgba(234, 179, 8, 0.2); color: #fef08a; border: 1px solid #eab308; }
+        .badge-low { background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid #22c55e; }
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="/admin_home" class="logo">Admin Panel</a>
+        <a href="/admin_home">Dashboard</a>
+        <a href="/admin_view_users">Users</a>
+        <a href="/admin_view_contracts">Contracts</a>
+        <a href="/admin_manage_rules">Manage Rules</a>
+        <a href="/admin_send_notification">Notifications</a>
+        <a href="/admin_view_feedback">Feedback</a>
+        <a href="/admin_view_complaints">Complaints</a>
+        <a href="/signout" style="margin-top: auto; color: #fca5a5;">Logout</a>
+    </div>
+    <div class="main-content">
+        {% if messages %}
+            {% for message in messages %}
+                <div style="padding: 1rem; border-radius: 8px; margin-bottom: 1rem; background: rgba(34, 197, 94, 0.2); border: 1px solid #22c55e; color: #86efac;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

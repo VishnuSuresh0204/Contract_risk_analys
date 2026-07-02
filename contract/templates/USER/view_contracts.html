@@ -1,0 +1,31 @@
+{% extends "USER/base_user.html" %}
+{% block content %}
+<div class="glass-card">
+    <h2 style="margin-top: 0;">My Contracts</h2>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+        {% for c in val %}
+        <tr>
+            <td>{{ c.title }}</td>
+            <td>{{ c.status }}</td>
+            <td>{{ c.uploaded_date|date:"Y-m-d H:i" }}</td>
+            <td>
+                {% if c.status == 'analyzed' %}
+                <a href="/user_contract_detail?id={{ c.id }}" class="btn" style="padding: 0.5rem 1rem;">Report</a>
+                <a href="/user_chatbot?contract_id={{ c.id }}" class="btn" style="padding: 0.5rem 1rem; background: #22c55e;">Ask AI</a>
+                {% elif c.status == 'uploaded' %}
+                <a href="/user_analyze_contract?id={{ c.id }}" class="btn" style="padding: 0.5rem 1rem; background: #eab308;">Start Analysis</a>
+                {% else %}
+                <span style="color: #94a3b8;">Processing...</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

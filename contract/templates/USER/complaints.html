@@ -1,0 +1,36 @@
+{% extends "USER/base_user.html" %}
+{% block content %}
+<div class="glass-card" style="max-width: 600px; margin: 0 auto 2rem auto;">
+    <h2 style="margin-top: 0;">Submit Complaint</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Subject</label>
+        <input type="text" name="subject" required>
+        
+        <label>Details</label>
+        <textarea name="message" rows="4" required></textarea>
+        
+        <button type="submit" class="btn">Submit</button>
+    </form>
+</div>
+
+<div class="glass-card">
+    <h2 style="margin-top: 0;">My Complaints</h2>
+    <table>
+        <tr>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Reply</th>
+            <th>Date</th>
+        </tr>
+        {% for c in complaints %}
+        <tr>
+            <td>{{ c.subject }}</td>
+            <td><span class="badge {% if c.status == 'pending' %}badge-medium{% else %}badge-low{% endif %}">{{ c.status }}</span></td>
+            <td>{{ c.reply|default:"-" }}</td>
+            <td>{{ c.created_at|date:"Y-m-d" }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

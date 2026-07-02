@@ -1,0 +1,24 @@
+{% extends "ADMIN/base_admin.html" %}
+{% block content %}
+<div class="glass-card">
+    <h2 style="margin-top: 0;">All Contracts</h2>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>User</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+        {% for c in val %}
+        <tr>
+            <td>{{ c.title }}</td>
+            <td>{{ c.user.name }}</td>
+            <td>{{ c.status }}</td>
+            <td>{{ c.uploaded_date|date:"Y-m-d H:i" }}</td>
+            <td><a href="/admin_view_contract_detail?id={{ c.id }}" class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">View</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

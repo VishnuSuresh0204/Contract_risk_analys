@@ -1,0 +1,53 @@
+{% extends "USER/base_user.html" %}
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+    <h2 style="margin: 0;">Contract Report: {{ contract.title }}</h2>
+    <div>
+        <a href="/user_download_report?id={{ contract.id }}" class="btn" style="background: #22c55e;">Download PDF Report</a>
+        <a href="/user_chatbot?contract_id={{ contract.id }}" class="btn">Ask AI About Contract</a>
+    </div>
+</div>
+
+<div class="glass-card">
+    {% if report %}
+    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid {% if report.overall_risk_level == 'high' %}#ef4444{% elif report.overall_risk_level == 'medium' %}#eab308{% else %}#22c55e{% endif %};">
+        <h3>Risk Summary</h3>
+        <p><strong>Overall Risk:</strong> <span class="badge badge-{{ report.overall_risk_level }}">{{ report.overall_risk_level|title }}</span></p>
+        <p><strong>Score:</strong> {{ report.overall_risk_score }} / 100</p>
+        <p><strong>Summary:</strong> {{ report.summary }}</p>
+    </div>
+    {% endif %}
+
+    <h3>Detected Clauses</h3>
+    <table>
+        <tr>
+            <th>Clause Type</th>
+            <th>Risk</th>
+            <th>Recommendation</th>
+        </tr>
+        {% for clause in clauses %}
+        <tr>
+            <td>{{ clause.clause_type }}</td>
+            <td><span class="badge badge-{{ clause.risk_level }}">{{ clause.risk_level }}</span></td>
+            <td>{{ clause.recommendation }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3 style="margin-top: 2rem;">Missing Clauses</h3>
+    <table>
+        <tr>
+            <th>Clause Type</th>
+            <th>Risk if Missing</th>
+            <th>Recommendation</th>
+        </tr>
+        {% for m in missing %}
+        <tr>
+            <td>{{ m.clause_type }}</td>
+            <td><span class="badge badge-{{ m.risk_level }}">{{ m.risk_level }}</span></td>
+            <td>{{ m.recommendation }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

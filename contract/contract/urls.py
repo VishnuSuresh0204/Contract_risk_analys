@@ -16,7 +16,32 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from myapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',views.index),
+    path('login',views.login_view),
+    path('logout',views.signout),
+    path('register_user',views.register_user),
+    path('admin_home',views.admin_home),
+    path('admin_view_users',views.admin_view_users),
+    path('admin_view_contracts',views.admin_view_contracts),
+    path('admin_view_contract_detail',views.admin_view_contract_detail),
+    path('admin_manage_rules',views.admin_manage_rules),
+    path('admin_toggle_rule',views.admin_toggle_rule),
+    path('admin_send_notification',views.admin_send_notification),
+    path('user_home', views.user_home),
+    path('user_upload_contract', views.user_upload_contract),
+    path('user_analyze_contract', views.user_analyze_contract),
+    path('user_view_contracts', views.user_view_contracts),
+    path('user_contract_detail', views.user_contract_detail),
+    path('user_download_report', views.user_download_report),
+    path('user_chatbot', views.user_chatbot),
+    path('user_send_chat_message', views.user_send_chat_message),
+    path('user_notifications', views.user_notifications),
+    path('user_feedback', views.user_feedback),
+    path('user_complaints', views.user_complaints),
+    path('admin_reply_complaint', views.admin_reply_complaint),
+    path('admin_view_feedback', views.admin_view_feedback),
+    path('admin_view_complaints', views.admin_view_complaints),
 ]

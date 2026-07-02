@@ -1,0 +1,35 @@
+{% extends "ADMIN/base_admin.html" %}
+{% block content %}
+<div class="glass-card">
+    <h2 style="margin-top: 0;">Complaints</h2>
+    <table>
+        <tr>
+            <th>User</th>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+        {% for c in complaints %}
+        <tr>
+            <td>{{ c.user.name }}</td>
+            <td>{{ c.subject }}</td>
+            <td>{{ c.status }}</td>
+            <td>{{ c.created_at|date:"Y-m-d" }}</td>
+            <td>
+                {% if c.status == 'pending' %}
+                <form method="POST" action="/admin_reply_complaint" style="display: flex; gap: 0.5rem;">
+                    {% csrf_token %}
+                    <input type="hidden" name="complaint_id" value="{{ c.id }}">
+                    <input type="text" name="reply" placeholder="Reply..." required style="margin: 0; padding: 0.5rem; width: 150px;">
+                    <button type="submit" class="btn" style="padding: 0.5rem 1rem;">Send</button>
+                </form>
+                {% else %}
+                Replied: {{ c.reply }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "ADMIN/base_admin.html" %}
+{% block content %}
+<div class="glass-card">
+    <h2 style="margin-top: 0;">User Feedback</h2>
+    <p>Average Rating: <strong>{{ avg_rating|default:"N/A" }}</strong> / 5</p>
+    <table>
+        <tr>
+            <th>User</th>
+            <th>Rating</th>
+            <th>Message</th>
+            <th>Date</th>
+        </tr>
+        {% for f in val %}
+        <tr>
+            <td>{{ f.user.name }}</td>
+            <td>{{ f.rating }}</td>
+            <td>{{ f.message }}</td>
+            <td>{{ f.created_at|date:"Y-m-d" }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

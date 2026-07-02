@@ -1,0 +1,16 @@
+{% extends "USER/base_user.html" %}
+{% block content %}
+<div class="glass-card" style="max-width: 500px; margin: 0 auto;">
+    <h2 style="margin-top: 0;">Provide Feedback</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Rating (1-5)</label>
+        <input type="number" name="rating" min="1" max="5" required>
+        
+        <label>Message</label>
+        <textarea name="message" rows="5" required></textarea>
+        
+        <button type="submit" class="btn" style="width: 100%;">Submit Feedback</button>
+    </form>
+</div>
+{% endblock %}

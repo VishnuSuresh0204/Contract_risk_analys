@@ -1,0 +1,18 @@
+{% extends "USER/base_user.html" %}
+{% block content %}
+<div class="glass-card" style="max-width: 600px; margin: 0 auto;">
+    <h2 style="margin-top: 0; text-align: center;">Upload Contract</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Contract Title (Optional)</label>
+        <input type="text" name="title" placeholder="Enter title or leave blank to use filename">
+        
+        <label>Contract File (PDF, DOCX, TXT)</label>
+        <div style="border: 2px dashed var(--glass-border); padding: 2rem; text-align: center; border-radius: 8px; margin-bottom: 1.5rem; background: rgba(255,255,255,0.02);">
+            <input type="file" name="contract_file" required style="border: none; background: transparent; margin: 0;">
+        </div>
+        
+        <button type="submit" class="btn" style="width: 100%; font-size: 1.1rem; padding: 1rem;">Analyze Contract</button>
+    </form>
+</div>
+{% endblock %}

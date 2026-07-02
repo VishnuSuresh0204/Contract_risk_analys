@@ -1,0 +1,22 @@
+{% extends "ADMIN/base_admin.html" %}
+{% block content %}
+<div class="glass-card">
+    <h2 style="margin-top: 0;">Registered Users</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Organization</th>
+        </tr>
+        {% for u in val %}
+        <tr>
+            <td>{{ u.name }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.phone }}</td>
+            <td>{{ u.organization }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
