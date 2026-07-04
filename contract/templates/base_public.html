@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}AI Contract Analysis{% endblock %}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #0f172a;
@@ -13,12 +13,13 @@
             --secondary: #1e293b;
             --accent: #8b5cf6;
             --glass-bg: rgba(30, 41, 59, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.15);
         }
         body {
             margin: 0;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
             background-color: var(--bg-color);
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
             color: var(--text-color);
             min-height: 100vh;
             display: flex;
@@ -29,8 +30,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 2rem;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--glass-border);
             position: sticky;
             top: 0;
@@ -58,7 +59,9 @@
             transition: all 0.3s ease;
         }
         .nav-links a:hover {
-            background: var(--glass-border);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
         }
         .container {
             flex: 1;
@@ -70,11 +73,15 @@
         }
         .glass-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
             padding: 2rem;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.25);
         }
         .btn {
             background: linear-gradient(90deg, #3b82f6, #8b5cf6);
@@ -100,13 +107,23 @@
             border: 1px solid var(--glass-border);
             background: rgba(255, 255, 255, 0.05);
             color: white;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
             box-sizing: border-box;
+            transition: all 0.3s ease;
         }
-        input:focus, textarea:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--primary);
             background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+        }
+        ::placeholder {
+            color: #94a3b8;
+            opacity: 1;
+        }
+        select option {
+            background: var(--secondary);
+            color: white;
         }
         table {
             width: 100%;
