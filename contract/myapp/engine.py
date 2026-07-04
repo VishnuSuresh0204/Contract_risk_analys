@@ -86,6 +86,12 @@ def detect_clauses(text):
         matched_snippet = None
         matched_rule = None
 
+        # Keep a reference to a rule for this clause type even when no
+        # keyword matches — needed so the "missing" branch can still
+        # report the admin's configured risk_level_if_missing instead
+        # of silently falling back to a hardcoded default.
+        fallback_rule = rules.first()
+
         for rule in rules:
 
             # A rule's keyword field may hold a single term or a
@@ -130,11 +136,13 @@ def detect_clauses(text):
 
         else:
 
+            effective_rule = matched_rule or fallback_rule
+
             results.append({
                 "clause_type": clause_type,
                 "is_present": False,
                 "clause_text": None,
-                "risk_level": matched_rule.risk_level_if_missing if matched_rule else "high",
+                "risk_level": effective_rule.risk_level_if_missing if effective_rule else "high",
                 "risk_reason": "Clause not found in contract text",
                 "recommendation": f"Add a clearly defined {clause_type} clause."
             })
@@ -203,8 +211,15 @@ RISK_WEIGHTS = {
 
 def calculate_risk(detected_clauses, missing_clauses):
     """
-    Combines per-clause risk levels and missing-clause penalties into
-    a single overall risk score (0-100) and Low/Medium/High rating.
+    Combines per-clause risk levels into a single overall risk score
+    (0-100) and Low/Medium/High rating.
+
+    `detected_clauses` already contains one entry per evaluated clause
+    type — present ones carry their assessed risk level, missing ones
+    carry their configured risk_level_if_missing. `missing_clauses` is
+    only used for the summary count; it must NOT be added into the
+    weight sum again, since its entries are already included in
+    `detected_clauses`.
     """
 
     total_weight = 0
@@ -212,10 +227,6 @@ def calculate_risk(detected_clauses, missing_clauses):
 
     for clause in detected_clauses:
         total_weight += RISK_WEIGHTS.get(clause["risk_level"], 0)
-
-    for missing in missing_clauses:
-        total_weight += RISK_WEIGHTS.get(missing["risk_level"], 0)
-        max_possible += RISK_WEIGHTS["high"]
 
     score = round((total_weight / max_possible) * 100, 2) if max_possible else 0
 
