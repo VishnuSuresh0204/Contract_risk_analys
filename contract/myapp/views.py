@@ -193,8 +193,23 @@ def admin_manage_rules(request):
 
     if request.method == "POST":
 
+        raw_clause_type = (request.POST.get("clause_type") or "").strip()
+
+        if not raw_clause_type:
+            messages.error(request, "Clause type name is required")
+            return redirect("/admin_manage_rules")
+
+        # If a clause type with the same name already exists (regardless
+        # of case), reuse its exact casing so "Payment Terms" and
+        # "payment terms" don't end up treated as two different clauses.
+        existing = ClauseRule.objects.filter(
+            clause_type__iexact=raw_clause_type
+        ).first()
+
+        clause_type = existing.clause_type if existing else raw_clause_type
+
         ClauseRule.objects.create(
-            clause_type=request.POST.get("clause_type"),
+            clause_type=clause_type,
             keyword=request.POST.get("keyword"),
             risk_level_if_missing=request.POST.get("risk_level_if_missing"),
             description=request.POST.get("description")
@@ -206,10 +221,23 @@ def admin_manage_rules(request):
 
     rules = ClauseRule.objects.all().order_by("clause_type")
 
+    # Distinct existing clause type names, handy for the template to
+    # power an autocomplete/datalist so the admin can reuse a name
+    # rather than retyping it.
+    existing_types = (
+        ClauseRule.objects
+        .values_list("clause_type", flat=True)
+        .distinct()
+        .order_by("clause_type")
+    )
+
     return render(
         request,
         "ADMIN/manage_rules.html",
-        {"val": rules}
+        {
+            "val": rules,
+            "existing_types": existing_types
+        }
     )
 
 def admin_toggle_rule(request):
