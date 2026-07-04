@@ -67,7 +67,14 @@ def detect_clauses(text):
     results = []
     text_lower = text.lower() if text else ""
 
-    clause_types = [c[0] for c in ClauseRule.CLAUSE_TYPE_CHOICES]
+    # Clause types are now entirely admin-defined — pull the distinct
+    # active types straight from ClauseRule instead of a hardcoded list.
+    clause_types = list(
+        ClauseRule.objects
+        .filter(is_active=True)
+        .values_list("clause_type", flat=True)
+        .distinct()
+    )
 
     for clause_type in clause_types:
 
@@ -81,8 +88,22 @@ def detect_clauses(text):
 
         for rule in rules:
 
-            pattern = re.escape(rule.keyword.lower())
-            match = re.search(pattern, text_lower)
+            # A rule's keyword field may hold a single term or a
+            # comma-separated list (e.g. "confidentiality, nda, trade secret").
+            # Match on ANY of them.
+            keyword_variants = [
+                kw.strip().lower()
+                for kw in rule.keyword.split(",")
+                if kw.strip()
+            ]
+
+            match = None
+
+            for variant in keyword_variants:
+                pattern = r"\b" + re.escape(variant) + r"\b"
+                match = re.search(pattern, text_lower)
+                if match:
+                    break
 
             if match:
                 start = max(match.start() - 100, 0)
@@ -115,7 +136,7 @@ def detect_clauses(text):
                 "clause_text": None,
                 "risk_level": matched_rule.risk_level_if_missing if matched_rule else "high",
                 "risk_reason": "Clause not found in contract text",
-                "recommendation": f"Add a clearly defined {clause_type.replace('_', ' ')} clause."
+                "recommendation": f"Add a clearly defined {clause_type} clause."
             })
 
     return results
@@ -139,7 +160,7 @@ def assess_clause_risk(clause_type, clause_text):
         return (
             "medium",
             "Clause language is vague or lacks specific figures/timelines.",
-            f"Clarify the {clause_type.replace('_', ' ')} clause with specific terms, durations, or amounts."
+            f"Clarify the {clause_type} clause with specific terms, durations, or amounts."
         )
 
     return (
