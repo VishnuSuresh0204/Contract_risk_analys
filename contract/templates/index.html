@@ -1,11 +1,35 @@
 {% extends "base_public.html" %}
 {% block content %}
-<div class="glass-card" style="text-align: center; padding: 4rem 2rem;">
-    <h1 style="font-size: 3rem; margin-bottom: 1rem; background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Smarter Contract Management</h1>
-    <p style="font-size: 1.25rem; color: #cbd5e1; margin-bottom: 2rem;">Leverage AI to automatically analyze risks, detect clauses, and ensure compliance in seconds.</p>
-    <div>
-        <a href="/login" class="btn" style="margin-right: 1rem;">Get Started</a>
-        <a href="/register_user" class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border);">Register Now</a>
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; text-align: center;">
+    <div class="glass-card" style="padding: 4rem 3rem; max-width: 800px; text-align: center; border-radius: 24px;">
+        <h1 style="font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2; font-weight: 800;">
+            <span style="background: linear-gradient(90deg, #60a5fa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">AI-Powered</span> Contract Risk Analysis
+        </h1>
+        <p style="font-size: 1.25rem; color: #e2e8f0; margin-bottom: 3rem; line-height: 1.6;">
+            Upload your contracts, identify hidden risks, detect critical clauses, and ensure compliance in seconds with our advanced AI engine.
+        </p>
+        <div style="display: flex; gap: 1.5rem; justify-content: center;">
+            <a href="/login" class="btn" style="padding: 1rem 2.5rem; font-size: 1.1rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);">Get Started</a>
+            <a href="/register_user" class="btn" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 1rem 2.5rem; font-size: 1.1rem; border-radius: 12px; box-shadow: none;">Create Account</a>
+        </div>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; width: 100%; max-width: 1000px; margin-top: 4rem;">
+        <div class="glass-card" style="padding: 2rem; text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: white;">Instant Analysis</h3>
+            <p style="color: #94a3b8; line-height: 1.5;">Get comprehensive contract insights in seconds, not hours.</p>
+        </div>
+        <div class="glass-card" style="padding: 2rem; text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🛡️</div>
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: white;">Risk Detection</h3>
+            <p style="color: #94a3b8; line-height: 1.5;">Automatically highlight high-risk clauses and missing protections.</p>
+        </div>
+        <div class="glass-card" style="padding: 2rem; text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">💬</div>
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: white;">AI Assistant</h3>
+            <p style="color: #94a3b8; line-height: 1.5;">Chat directly with your contract to answer specific questions.</p>
+        </div>
     </div>
 </div>
 {% endblock %}

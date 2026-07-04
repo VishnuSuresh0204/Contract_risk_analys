@@ -1,22 +1,50 @@
 {% extends "ADMIN/base_admin.html" %}
 {% block content %}
-<h2 style="margin-bottom: 1.5rem;">Dashboard Overview</h2>
-<div class="grid-cards">
-    <div class="glass-card" style="text-align: center;">
-        <h3 style="color: #94a3b8; font-size: 1rem;">Total Users</h3>
-        <p style="font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0;">{{ users }}</p>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2 style="margin: 0; font-size: 2rem; font-weight: 800;">Admin Dashboard</h2>
+    <div style="color: #94a3b8; font-weight: 600;">Welcome back, Admin</div>
+</div>
+
+<div class="grid-cards" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+    <div class="glass-card" style="display: flex; align-items: center; padding: 1.5rem;">
+        <div style="font-size: 2.5rem; margin-right: 1.5rem; background: rgba(59, 130, 246, 0.2); padding: 1rem; border-radius: 16px; color: #60a5fa;">👥</div>
+        <div>
+            <h3 style="color: #94a3b8; font-size: 0.9rem; margin: 0 0 0.5rem 0; text-transform: uppercase; letter-spacing: 1px;">Total Users</h3>
+            <p style="font-size: 2rem; font-weight: 800; margin: 0; color: white;">{{ users }}</p>
+        </div>
     </div>
-    <div class="glass-card" style="text-align: center;">
-        <h3 style="color: #94a3b8; font-size: 1rem;">Total Contracts</h3>
-        <p style="font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0;">{{ contracts }}</p>
+    
+    <div class="glass-card" style="display: flex; align-items: center; padding: 1.5rem;">
+        <div style="font-size: 2.5rem; margin-right: 1.5rem; background: rgba(139, 92, 246, 0.2); padding: 1rem; border-radius: 16px; color: #a78bfa;">📄</div>
+        <div>
+            <h3 style="color: #94a3b8; font-size: 0.9rem; margin: 0 0 0.5rem 0; text-transform: uppercase; letter-spacing: 1px;">Total Contracts</h3>
+            <p style="font-size: 2rem; font-weight: 800; margin: 0; color: white;">{{ contracts }}</p>
+        </div>
     </div>
-    <div class="glass-card" style="text-align: center;">
-        <h3 style="color: #94a3b8; font-size: 1rem;">Analyzed</h3>
-        <p style="font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0; color: #22c55e;">{{ analyzed }}</p>
+
+    <div class="glass-card" style="display: flex; align-items: center; padding: 1.5rem;">
+        <div style="font-size: 2.5rem; margin-right: 1.5rem; background: rgba(34, 197, 94, 0.2); padding: 1rem; border-radius: 16px; color: #4ade80;">✅</div>
+        <div>
+            <h3 style="color: #94a3b8; font-size: 0.9rem; margin: 0 0 0.5rem 0; text-transform: uppercase; letter-spacing: 1px;">Analyzed</h3>
+            <p style="font-size: 2rem; font-weight: 800; margin: 0; color: #4ade80;">{{ analyzed }}</p>
+        </div>
     </div>
-    <div class="glass-card" style="text-align: center;">
-        <h3 style="color: #94a3b8; font-size: 1rem;">High Risk</h3>
-        <p style="font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0; color: #ef4444;">{{ high_risk }}</p>
+
+    <div class="glass-card" style="display: flex; align-items: center; padding: 1.5rem;">
+        <div style="font-size: 2.5rem; margin-right: 1.5rem; background: rgba(239, 68, 68, 0.2); padding: 1rem; border-radius: 16px; color: #f87171;">⚠️</div>
+        <div>
+            <h3 style="color: #94a3b8; font-size: 0.9rem; margin: 0 0 0.5rem 0; text-transform: uppercase; letter-spacing: 1px;">High Risk</h3>
+            <p style="font-size: 2rem; font-weight: 800; margin: 0; color: #f87171;">{{ high_risk }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="glass-card">
+    <h3 style="margin-top: 0; margin-bottom: 1.5rem; font-size: 1.5rem;">Quick Actions</h3>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a href="/admin_view_contracts" class="btn">View All Contracts</a>
+        <a href="/admin_view_users" class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border);">Manage Users</a>
+        <a href="/admin_manage_rules" class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border);">Update AI Rules</a>
     </div>
 </div>
 {% endblock %}
